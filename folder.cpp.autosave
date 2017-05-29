@@ -1,0 +1,32 @@
+#include "folder.h"
+
+folder::folder(string n, string d) : archivo(n,d,1)
+{
+    l = new lista();
+    cant = 0;
+    ant = NULL;
+    sig = NULL;
+    itm2= new QTreeWidgetItem();
+}
+
+
+
+
+int folder::tip()
+{
+    return archivo::tip();
+}
+
+
+
+
+string folder::dir()
+{
+    return archivo::dir();
+}
+
+
+string folder::nom()
+{
+    return archivo::nom();
+}

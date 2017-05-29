@@ -1,0 +1,21 @@
+#ifndef FOLDER_H
+#define FOLDER_H
+#include "archivo.h"
+#include "lista.h"
+#include <QtWidgets>
+class folder: public archivo
+{
+public:
+    folder();
+    folder(string n; string d);
+    lista *l;
+    int cant;
+    string nom();
+    string dir();
+    int tip();
+    folder * ant;
+    folder * sig;
+    QTreeWidgetItem *itm2;
+};
+
+#endif // FOLDER_H

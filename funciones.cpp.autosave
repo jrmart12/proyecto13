@@ -1,0 +1,106 @@
+#include "funciones.h"
+
+funciones::funciones()
+{
+    r = new folder("raiz","raiz");
+}
+
+int funciones::eliminar(int p,folder *d)
+{
+    archivo *algo = buscar(p,d);
+    if(algo == NULL)
+        return -1;
+    if(d->Lista->inicio == algo){
+        d->Lista->inicio = algo->siguiente;
+        d->cant--;
+    }
+    else if(algo->siguiente == NULL){
+        archivo * algo2 = algo->anterior;
+        algo2->siguiente =NULL;
+        d->cant--;
+    }
+    else{
+        archivo *temporal = algo->siguiente;
+        archivo *temporal2 = algo->anterior;
+        temporal2->siguiente = temporal;
+        temporal->anterior = temporal2;
+        d->cant--;
+    }
+    return 0;
+
+
+}
+
+archivo *funciones::Cargar( int p,folder * d)
+{
+    archivo *algo = d->Lista->inicio;
+    for(int x = 0;x<p;x++)
+    {
+        algo = algo->siguiente;
+    }
+    return algo;
+}
+
+
+archivo * funciones::buscar(int p, folder *d)
+{
+    archivo * algo = d->Lista->inicio;
+    for(int x = 0;x<pos;x++)
+    {
+        algo = algo->siguiente;
+    }
+    return algo;
+}
+
+archivo * funciones::CrearArchivo(folder *donde,string nombre,string tipo)
+{
+    archivo *nuevo;
+    string direccion;
+
+    if(tipo == "archivo"){
+        direccion = donde->getDireccion() +nombre + ".txt"+"/";
+        nuevo = new textfile(nombre,direccion,"");
+    }
+
+    else if(tipo == "folder"){
+        direccion = donde->getDireccion() + nombre+ "/" ;
+        nuevo = new folder(nombre,direccion);
+    }
+
+    agregar(nuevo,donde);
+    return nuevo;
+}
+
+void funciones::agregar(archivo * nuevo,folder *donde)
+{
+    if(donde->Lista->inicio == NULL){
+        donde->Lista->inicio = nuevo;
+        donde->cant++;
+    }
+    else
+    {
+        archivo * temp = donde->Lista->inicio;
+        while(temp->siguiente != NULL)
+            temp = temp->siguiente;
+        temp->siguiente = nuevo;
+        nuevo->anterior = temp;
+        donde->cant++;
+    }
+}
+
+QList<archivo*> funciones::ListarArchivos(folder *donde)
+{
+   QList<archivo*> lista;
+   archivo *temp = donde->Lista->inicio;
+   for(int x = 0;x<donde->cant;x++)
+   {
+       lista.append(temp);
+       temp = temp->siguiente;
+   }
+   return lista;
+}
+
+void funciones::pegar(archivo * nuevo,folder *donde)
+{
+    agregar(nuevo,donde);
+}
